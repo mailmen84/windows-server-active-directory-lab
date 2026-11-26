@@ -1,0 +1,12 @@
+# Secrets and local-only files
+*.key
+*.pem
+*.pfx
+*.env
+secrets/
+*.credential.xml
+
+# OS files
+Thumbs.db
+desktop.ini
+.DS_Store
