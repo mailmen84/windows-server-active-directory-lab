@@ -10,3 +10,6 @@ secrets/
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# Editor settings
+.vscode/
