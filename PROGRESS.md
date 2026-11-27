@@ -4,9 +4,9 @@
 
 | Item | Value |
 |------|-------|
-| Current module | Module 00 – GitHub and Project Organisation |
-| Current step | 00.3 – Editing, committing and pushing a change |
-| Last completed task | 00.2 – Cloning the repository locally |
+| Current module | Module 00 - GitHub and Project Organisation |
+| Current step | 00.3 - Editing, committing and pushing a change |
+| Last completed task | 00.2 - Cloning the repository locally |
 | Current task | Edit a file locally, commit and push the change |
 | GUI configuration status | Not started |
 | PowerShell configuration status | Not started |
@@ -33,4 +33,4 @@
 
 ## Next Planned Task
 
-Step 00.4 – `.gitignore` and keeping secrets out of the repository.
+Step 00.4 - `.gitignore` and keeping secrets out of the repository.
