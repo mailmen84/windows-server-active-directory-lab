@@ -140,3 +140,127 @@ Results:
 - [GitHub Desktop documentation](https://docs.github.com/en/desktop)
 - [Git documentation – git clone](https://git-scm.com/docs/git-clone)
 - [Microsoft Learn – winget](https://learn.microsoft.com/en-us/windows/package-manager/winget/)
+
+---
+
+## Step 00.3 - Editing, committing and pushing a change
+
+**Completed:** 2026-11-27
+
+### Goal
+
+Complete the full change cycle on my own: branch -> edit -> commit -> push ->
+Pull Request -> merge -> clean up.
+
+### Theory
+
+| Term | Meaning |
+|------|---------|
+| Working directory | The files on disk that are being edited. |
+| Staging area | Changes selected for the next commit (`git add`; checkboxes in GitHub Desktop). |
+| Commit | A snapshot of the staged changes saved in the local history. |
+| Push | Upload local commits to GitHub. Until then, the change exists only locally. |
+| Feature branch | A short-lived branch for one change; `main` stays untouched until the merge. |
+
+Good commit messages are short, in English, in imperative mood and describe
+**what and why** (`Replace en dashes in progress log`), not only which file changed
+(`Update PROGRESS.md`).
+
+### Real-world application
+
+This is how administrators change scripts and documentation in a team: a branch per
+change, a descriptive commit, a Pull Request for review, and deleting the branch after
+the merge so the repository does not fill up with old branches.
+
+### GUI method (GitHub Desktop + VS Code)
+
+Change: replace en dashes (`–`) with hyphens (`-`) in `PROGRESS.md`.
+
+1. **Current branch** -> **New branch** -> `fix-progress-dashes`.
+2. Edit the file in VS Code (**Ctrl+H**, **Replace All**, **Ctrl+S**).
+3. Review the diff in the **Changes** tab.
+4. Enter a commit summary -> **Commit to fix-progress-dashes**.
+5. **Publish branch** -> **Create Pull Request** -> merge on GitHub (PR #4).
+6. Switch back to `main`, **Fetch origin** -> **Pull origin**, delete the branch.
+
+#### GUI verification
+
+- PR #4 merged into `main`; only dash characters changed in `PROGRESS.md`.
+- No en dashes left in `PROGRESS.md`; branch deleted.
+
+### PowerShell method (`git` CLI)
+
+Change: add `.vscode/` to `.gitignore` (VS Code workspace settings are local
+editor settings, not project documentation).
+
+```powershell
+Set-Location D:\Repos\windows-server-active-directory-lab
+git switch main
+git pull
+
+# One-time identity setup (use the GitHub "noreply" address, never a private email)
+git config --global user.name "mailmen84"
+git config --global user.email "<id>+mailmen84@users.noreply.github.com"
+
+git switch -c add-vscode-gitignore
+Add-Content -Path .gitignore -Value "`n# Editor settings`n.vscode/"
+git status
+git diff
+git add .gitignore
+git commit -m "Ignore VS Code workspace settings"
+git push -u origin add-vscode-gitignore
+
+# After the Pull Request is merged on GitHub (PR #5):
+git switch main
+git pull
+git branch -d add-vscode-gitignore
+git push origin --delete add-vscode-gitignore
+git fetch --prune
+git branch -a
+```
+
+| Command | Purpose |
+|---------|---------|
+| `git switch <branch>` | Switch to an existing branch. |
+| `git switch -c <branch>` | Create a new branch and switch to it. |
+| `git pull` | Download and apply new commits from GitHub. |
+| `git config --global user.name/user.email` | Set the author identity written into every commit. |
+| `Add-Content` | Append text to the end of a file. `` `n `` is a new line in PowerShell. |
+| `git status` / `git diff` | Show changed files / the exact changes. |
+| `git add <file>` | Stage a change for the next commit. |
+| `git commit -m "<message>"` | Save the staged changes as a commit. |
+| `git push -u origin <branch>` | Upload the branch; `-u` remembers the upstream branch. |
+| `git branch -d <branch>` | Delete a local branch (refuses if it is not merged). |
+| `git push origin --delete <branch>` | Delete a branch on GitHub. |
+| `git fetch --prune` | Remove local references to branches deleted on GitHub. |
+| `git branch -a` | List local and remote branches. |
+
+#### PowerShell verification
+
+- PR #5 merged; `.gitignore` on `main` ends with `# Editor settings` and `.vscode/`.
+- Commit `Ignore VS Code workspace settings` uses the GitHub noreply address.
+- `git branch -a` shows only `main` and the remote working branches.
+
+### Troubleshooting
+
+| Problem | Cause | Resolution |
+|---------|-------|------------|
+| Prompt shows a deleted folder; `Test-Path` returns `False` | The PowerShell window was still located in the test folder deleted in step 00.2. | `Set-Location` to the real repository and check with `Get-Location` before running commands. |
+| `fatal: refs/remotes/origin/HEAD cannot be resolved to branch` | Typo: `origin` typed twice in `git push`. | Run `git push -u origin <branch>`. |
+| `remote: error: GH007: Your push would publish a private email address` | The commit was created before `user.email` was set to the noreply address. GitHub email privacy blocked the push. | Set the noreply address, then `git commit --amend --reset-author --no-edit` (only for commits that were **not** pushed yet) and push again. |
+| Commit author shows a wrong name | Typo in `user.name`. | Fix with `git config --global user.name`. Pushed commits are not rewritten. |
+
+### Lessons learned
+
+- Always check the prompt (`Get-Location`) before running commands.
+- Configure Git identity (noreply email) **before** the first commit on a new computer.
+- Never rewrite history that is already on GitHub; `--amend` only for local commits.
+- Delete branches after they are merged.
+
+### References
+
+- [GitHub Docs - Setting your commit email address](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address)
+- [GitHub Docs - Blocking command line pushes that expose your personal email address](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/blocking-command-line-pushes-that-expose-your-personal-email-address)
+- [Git documentation - git switch](https://git-scm.com/docs/git-switch)
+- [Git documentation - git commit](https://git-scm.com/docs/git-commit)
+- [Git documentation - git push](https://git-scm.com/docs/git-push)
