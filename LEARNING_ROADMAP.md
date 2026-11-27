@@ -91,3 +91,5 @@ Where possible, every step is done twice: GUI first, then PowerShell.
 - 12.3 Password reset and account unlock
 - 12.4 Troubleshooting: logon, trust relationship and time synchronization (W32Time) problems
 - 12.5 Helpdesk-style tickets
+- 12.6 Git workflow practice: branch, commit, push, Pull Request (repetition requested by the learner)
+- 12.7 Keeping a personal email address private on GitHub and in documentation (requested by the learner)
