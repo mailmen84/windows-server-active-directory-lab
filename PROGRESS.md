@@ -5,20 +5,20 @@
 | Item | Value |
 |------|-------|
 | Current module | Module 00 – GitHub and Project Organisation |
-| Current step | 00.1 – Repository, commit, branch and Pull Request basics |
-| Last completed task | – (project start) |
-| Current task | Review and merge the Pull Request with the initial project documentation |
-| GUI configuration status | In progress |
-| PowerShell configuration status | Not applicable for this step |
+| Current step | 00.2 – Cloning the repository locally |
+| Last completed task | 00.1 – Repository, commit, branch and Pull Request basics |
+| Current task | Clone the repository to the local computer (GUI: GitHub Desktop, then `git` CLI) |
+| GUI configuration status | Not started |
+| PowerShell configuration status | Not started |
 | Verification results | Pending |
-| Documentation status | Pending merge |
+| Documentation status | Not started |
 | Last updated | 2026-11-26 |
 
 ## Completed Tasks
 
 | Date | Module / Step | Task | Notes |
 |------|---------------|------|-------|
-| – | – | – | – |
+| 2026-11-26 | 00.1 | Repository, commit, branch and Pull Request basics | Initial documentation reviewed and merged by the learner via PR #1 (GitHub web GUI). Concepts confirmed as understood. |
 
 ## Outstanding Questions
 
@@ -32,4 +32,4 @@
 
 ## Next Planned Task
 
-Step 00.2 – Cloning the repository locally.
+Step 00.3 – Editing, committing and pushing a change.
